@@ -12,7 +12,8 @@ percent_font=pygame.font.Font('sprites_final/Black_Crayon.ttf', 25)
 percent=0
 while True:
     if event.type == pygame.KEYDOWN:
-
+        if event.key == pygame.K_RIGHT:
+            percent=percent+1
 while True:
     screen.blit(background, (0, 0))
     pygame.display.flip()
