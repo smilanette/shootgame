@@ -5,6 +5,7 @@ from game_parameters import *
 import math
 import random
 from shooting import Shot
+import time
 pygame.init()
 screen = pygame.display.set_mode((screen_width,screen_height))
 running=True
@@ -22,7 +23,7 @@ angle_font=pygame.font.Font('sprites_final/Black_Crayon.ttf', 25)
 #draw screen
 #screen.blit(background, (0, 0))
 #pygame.display.flip()
-ball = Shot(ball_x, ball_y, percentm, anglem)
+ball = Shot(ball_x, ball_y, percentm, anglem, startm)
 angle1=0
 angle2=0
 percent1=0
@@ -66,6 +67,7 @@ while running:
                     ball.percent=percent2*-1
                     ball.angle=angle2*math.pi/180
                     turn=turn+1
+                    ball.start=time.perf_counter()
                     print (turn)
                 else:
                     ball.x = 100
@@ -73,6 +75,7 @@ while running:
                     ball.angle=angle1*math.pi/180
                     ball.percent=percent1
                     turn=turn+1
+                    ball.start=time.perf_counter()
                     print (turn )
 
 

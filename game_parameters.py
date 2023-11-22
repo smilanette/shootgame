@@ -9,3 +9,4 @@ ball_x=-50
 ball_y=-50
 #percent=percent1
 #angle=angle1
+startm=0
