@@ -1,3 +1,11 @@
 screen_width = 800
 screen_height = 600
 tile_size = 100
+percentm=0
+anglem=0
+#angle1=5
+#angle2=5
+ball_x=-50
+ball_y=-50
+#percent=percent1
+#angle=angle1
