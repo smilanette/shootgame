@@ -6,6 +6,9 @@ import math
 import random
 from shooting import Shot
 import time
+from drawcannon1 import Cannonleft
+from drawcannon2 import Cannonright
+from drawingtower import Tower
 pygame.init()
 screen = pygame.display.set_mode((screen_width,screen_height))
 running=True
@@ -16,12 +19,15 @@ blueball = pygame.image.load("sprites_final/kenney_rolling-ball-assets/PNG/Defau
 blueball.set_colorkey((0, 0, 0))
 redball = pygame.image.load("sprites_final/kenney_rolling-ball-assets/PNG/Default/ball_red_small.png").convert()
 redball.set_colorkey((0, 0, 0))
+stars=pygame.image.load("sprites_final/kenney_rolling-ball-assets/PNG/Default/star.png").convert()
+
+
 
 
 #add pygame clock
 clock = pygame.time.Clock()
 #sounds
-oof=pygame.mixer.Sound('sprites_final/hurt.wav')
+oofsound=pygame.mixer.Sound('sprites_final/hurt.wav')
 #set turn
 turn=1
 #percent
@@ -29,6 +35,9 @@ percent_font=pygame.font.Font('sprites_final/Black_Crayon.ttf', 25)
 angle_font=pygame.font.Font('sprites_final/Black_Crayon.ttf', 25)
 #pre reqs
 ball = Shot(ball_x, ball_y, percentm, anglem, startm)
+cannon1 = Cannonleft(70, screen_height - tile_size - 25)
+cannon2 = Cannonright(730, screen_height - tile_size-15)
+tower=Tower(400,385)
 angle1=20
 angle2=20
 percent1=28
@@ -85,37 +94,51 @@ while running:
                     ball.start=time.perf_counter()
                     print (turn )
 
-
-        #print (event)
     # draw screen
     screen.blit(background, (0, 0))
-
-    # draw objects
-    cannon1 = pygame.image.load("sprites_final/cannon.png").convert()
-    cannon2 = pygame.image.load("sprites_final/cannon.png").convert()
-    cannon2 = pygame.transform.flip(cannon2, True, False)
-    tower=pygame.image.load("sprites_final/kenney_background-elements-redux/Backgrounds/towerAlt.png").convert()
-    # make pngs transparent
-    cannon1.set_colorkey((255, 255, 255))
-    cannon2.set_colorkey((255, 255, 255))
-    tower.set_colorkey((0, 0, 0))
-    #fill in cannon
-    screen.blit(cannon1, (20, screen_height - tile_size - 60))
-    screen.blit(cannon2, (700, screen_height - tile_size - 60))
-    screen.blit(tower, (370, 270))
-    #cannon1=pygame.sprite.Sprite
-    #cannon2=pygame.sprite.Sprite
+    # draw lives
+    stars.set_colorkey((0, 0, 0))
+    for i in range(int(numlives1)):
+        screen.blit(stars, (40+ (40*i), screen_height - tile_size+70))
+    for i in range(int(numlives2)):
+        screen.blit(stars, (650+ (40*i), screen_height - tile_size+70))
+    # draw cannon and tower
+    cannon1.drawcannonleft(screen)
+    cannon2.drawcannonright(screen)
+    tower.drawtower(screen)
     #draw ball
     ball.update()
     ball.draw(screen)
 
     #collisions:
 
-    #result1 = pygame.sprite.spritecollide(ball, cannon1, True)
-    #result2 = pygame.sprite.spritecollide(ball, cannon2, True)
-    #if result1:
-        #ball.percent=0
-        #print ('collide')
+    result1 = pygame.sprite.collide_rect(ball, cannon2)
+    result2=pygame.sprite.collide_rect(ball, cannon1)
+    result3=pygame.sprite.collide_rect(ball,tower)
+    if result3:
+        ball.percent = 0
+        ball.x = 330
+        ball.y = 30
+        ball.image = pygame.image.load("sprites_final/oof.png").convert()
+        ball.image.set_colorkey((255, 255, 255))
+    if turn%2!=1:
+        if result1:
+            ball.percent=0
+            ball.x=330
+            ball.y=30
+            ball.image = pygame.image.load("sprites_final/criticalhit.png").convert()
+            ball.image.set_colorkey((255, 255, 255))
+            numlives2=numlives2-1
+            print ('collide')
+    if turn%2!=0:
+        if result2:
+            ball.percent=0
+            ball.x=330
+            ball.y=30
+            ball.image=pygame.image.load("sprites_final/criticalhit.png").convert()
+            ball.image.set_colorkey((255, 255, 255))
+            numlives1=numlives1-1
+            print ('collide')
     #elif result2:
         #ball.percent=0
         #print ('collide')

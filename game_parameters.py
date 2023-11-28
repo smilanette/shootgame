@@ -7,3 +7,5 @@ anglem=0
 ball_x=-50
 ball_y=-50
 startm=0
+numlives1=3
+numlives2=3
