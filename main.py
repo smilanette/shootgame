@@ -9,6 +9,9 @@ import time
 from drawcannon1 import Cannonleft
 from drawcannon2 import Cannonright
 from drawingtower import Tower
+from blockades import Blockades, blockades
+from powerup import Powerup, health
+
 pygame.init()
 screen = pygame.display.set_mode((screen_width,screen_height))
 running=True
@@ -42,6 +45,13 @@ angle1=20
 angle2=20
 percent1=28
 percent2=28
+
+#draw blockades
+for _ in range(3):
+    blockades.add(Blockades(random.randint(100, 600), random.randint(50, 225)))
+for _ in range(1):
+    health.add(Powerup(random.randint(100, 600), random.randint(50, 225)))
+
 while running:
     screen.blit(background, (0, 0))
     for event in pygame.event.get():
@@ -96,6 +106,9 @@ while running:
 
     # draw screen
     screen.blit(background, (0, 0))
+    #draw blockades
+    blockades.draw(screen)
+    health.draw(screen)
     # draw lives
     stars.set_colorkey((0, 0, 0))
     for i in range(int(numlives1)):
@@ -115,33 +128,60 @@ while running:
     result1 = pygame.sprite.collide_rect(ball, cannon2)
     result2=pygame.sprite.collide_rect(ball, cannon1)
     result3=pygame.sprite.collide_rect(ball,tower)
+    result4=pygame.sprite.spritecollide(ball, blockades, True)
+    result5 = pygame.sprite.spritecollide(ball, health, True)
     if result3:
         ball.percent = 0
         ball.x = 330
         ball.y = 30
         ball.image = pygame.image.load("sprites_final/oof.png").convert()
         ball.image.set_colorkey((255, 255, 255))
+        for block in blockades:
+            blockades.remove(block)
+        for i in range(3):
+            blockades.add(Blockades(random.randint(100, 600), random.randint(50, 225)))
     if turn%2!=1:
+        if result5:
+            numlives1 = numlives1 + 1
+            health.add(Powerup(random.randint(100, 600), random.randint(50, 225)))
         if result1:
             ball.percent=0
             ball.x=330
             ball.y=30
             ball.image = pygame.image.load("sprites_final/criticalhit.png").convert()
             ball.image.set_colorkey((255, 255, 255))
+            for block in blockades:
+                blockades.remove(block)
+            for i in range(3):
+                blockades.add(Blockades(random.randint(100, 600), random.randint(50, 225)))
             numlives2=numlives2-1
             print ('collide')
     if turn%2!=0:
+        if result5:
+            numlives2=numlives2+1
+            health.add(Powerup(random.randint(100, 600), random.randint(50, 225)))
         if result2:
             ball.percent=0
             ball.x=330
             ball.y=30
             ball.image=pygame.image.load("sprites_final/criticalhit.png").convert()
             ball.image.set_colorkey((255, 255, 255))
+            for block in blockades:
+                blockades.remove(block)
+            for i in range(3):
+                blockades.add(Blockades(random.randint(100, 600), random.randint(50, 225)))
             numlives1=numlives1-1
             print ('collide')
-    #elif result2:
-        #ball.percent=0
-        #print ('collide')
+    if result4:
+        ball.percent = 0
+        ball.x = 330
+        ball.y = 30
+        ball.image = pygame.image.load("sprites_final/oof.png").convert()
+        ball.image.set_colorkey((255, 255, 255))
+        for block in blockades:
+            blockades.remove(block)
+        for i in range(3):
+            blockades.add(Blockades(random.randint(100, 600), random.randint(50, 225)))
     #draw percent
     percent_text1 = percent_font.render(f"Percent: {str(percent1)}", True, (0, 50, 182))
     percent_text2 = percent_font.render(f"Percent: {str(percent2)}", True, (0, 50, 182))
