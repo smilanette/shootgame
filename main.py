@@ -11,12 +11,18 @@ from drawcannon2 import Cannonright
 from drawingtower import Tower
 from blockades import Blockades, blockades
 from powerup import Powerup, health
+from player1win import ONEWIN
+from player2win import TWOWIN
 
 pygame.init()
 screen = pygame.display.set_mode((screen_width,screen_height))
 running=True
 background =screen.copy()
 draw_background(background)
+#set music
+pygame.mixer.init()
+pygame.mixer.music.load("sprites_final/pygamemusic.mp3")
+pygame.mixer.music.play(100)
 #balls
 blueball = pygame.image.load("sprites_final/kenney_rolling-ball-assets/PNG/Default/ball_blue_small.png").convert()
 blueball.set_colorkey((0, 0, 0))
@@ -31,6 +37,8 @@ stars=pygame.image.load("sprites_final/kenney_rolling-ball-assets/PNG/Default/st
 clock = pygame.time.Clock()
 #sounds
 oofsound=pygame.mixer.Sound('sprites_final/hurt.wav')
+bubbles=pygame.mixer.Sound('sprites_final/bubbles.wav')
+cannonhit=pygame.mixer.Sound('sprites_final/chomp.wav')
 #set turn
 turn=1
 #percent
@@ -45,6 +53,9 @@ angle1=20
 angle2=20
 percent1=28
 percent2=28
+player1win=ONEWIN(-1000,-1000)
+player2win=TWOWIN(-1000,-1000)
+
 
 #draw blockades
 for _ in range(3):
@@ -103,6 +114,20 @@ while running:
                     turn=turn+1
                     ball.start=time.perf_counter()
                     print (turn )
+            if event.key == pygame.K_1:
+                numlives1 = 3
+                numlives2 = 3
+                player2win.x = -2000
+                player2win.y = -2000
+                player1win.x = -2000
+                player1win.y = -2000
+                x = 0
+                y = 0
+                turn=1
+                ball.image = redball
+                ball.x=-1000
+                ball.y=-1000
+
 
     # draw screen
     screen.blit(background, (0, 0))
@@ -136,6 +161,7 @@ while running:
         ball.y = 30
         ball.image = pygame.image.load("sprites_final/oof.png").convert()
         ball.image.set_colorkey((255, 255, 255))
+        pygame.mixer.Sound.play(oofsound)
         for block in blockades:
             blockades.remove(block)
         for i in range(3):
@@ -144,12 +170,15 @@ while running:
         if result5:
             numlives1 = numlives1 + 1
             health.add(Powerup(random.randint(100, 600), random.randint(50, 225)))
+            pygame.mixer.Sound.play(bubbles)
+
         if result1:
             ball.percent=0
             ball.x=330
             ball.y=30
             ball.image = pygame.image.load("sprites_final/criticalhit.png").convert()
             ball.image.set_colorkey((255, 255, 255))
+            pygame.mixer.Sound.play(cannonhit)
             for block in blockades:
                 blockades.remove(block)
             for i in range(3):
@@ -160,12 +189,14 @@ while running:
         if result5:
             numlives2=numlives2+1
             health.add(Powerup(random.randint(100, 600), random.randint(50, 225)))
+            pygame.mixer.Sound.play(bubbles)
         if result2:
             ball.percent=0
             ball.x=330
             ball.y=30
             ball.image=pygame.image.load("sprites_final/criticalhit.png").convert()
             ball.image.set_colorkey((255, 255, 255))
+            pygame.mixer.Sound.play(cannonhit)
             for block in blockades:
                 blockades.remove(block)
             for i in range(3):
@@ -178,6 +209,7 @@ while running:
         ball.y = 30
         ball.image = pygame.image.load("sprites_final/oof.png").convert()
         ball.image.set_colorkey((255, 255, 255))
+        pygame.mixer.Sound.play(oofsound)
         for block in blockades:
             blockades.remove(block)
         for i in range(3):
@@ -192,8 +224,21 @@ while running:
     angle_text2 = angle_font.render(f"Angle: {str(angle2)}", True, (0, 50, 182))
     screen.blit(angle_text1, (40, 545))
     screen.blit(angle_text2, (650, 545))
-
+    #draw final screens
+    player1win.drawone(screen)
+    player2win.drawtwo(screen)
     pygame.display.flip()
     clock.tick(60)
+    #make it so when you lose lives you lose
+    if numlives1<1:
+        x=1
+    if numlives2<1:
+        y=1
+    if x==1:
+        player2win.x=0
+        player2win.y=0
+    if y==1:
+        player1win.x = 0
+        player1win.y = 0
 pygame.quit()
 sys.exit()
