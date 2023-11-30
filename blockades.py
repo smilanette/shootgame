@@ -1,8 +1,6 @@
 
 
 import pygame
-import random
-from game_parameters import *
 
 
 class Blockades(pygame.sprite.Sprite):

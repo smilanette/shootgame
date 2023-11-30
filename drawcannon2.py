@@ -1,5 +1,4 @@
-
-from game_parameters import *
+import pygame
 
 class Cannonright(pygame.sprite.Sprite):
     def __init__(self, x, y,):

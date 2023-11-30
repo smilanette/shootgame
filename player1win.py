@@ -1,8 +1,4 @@
-import math
-import time
 
-import pygame
-import random
 from game_parameters import *
 
 class ONEWIN(pygame.sprite.Sprite):

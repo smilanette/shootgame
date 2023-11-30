@@ -1,9 +1,4 @@
-import math
-import time
-
 import pygame
-import random
-from game_parameters import *
 
 class Cannonleft(pygame.sprite.Sprite):
     def __init__(self, x, y,):
