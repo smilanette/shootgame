@@ -5,8 +5,8 @@ tile_size = 100
 percentm=0
 anglem=0
 ball_x=0
-ball_y=-500
-startm=0
+ball_y=2000
+startm=1
 numlives1=1
 numlives2=1
 #initiating numbers

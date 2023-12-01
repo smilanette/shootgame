@@ -46,10 +46,10 @@ ball = Shot(ball_x, ball_y, percentm, anglem, startm)
 cannon1 = Cannonleft(70, screen_height - tile_size - 25)
 cannon2 = Cannonright(730, screen_height - tile_size-15)
 tower=Tower(400,385)
-angle1=20
-angle2=20
-percent1=28
-percent2=28
+angle1=1
+angle2=1
+percent1=1
+percent2=1
 player1win=ONEWIN(-1000,-1000)
 player2win=TWOWIN(-1000,-1000)
 start=Start(0,0)
@@ -72,25 +72,25 @@ while running:
                 if percent2<100:
                     percent2=percent2+1
             if event.key == pygame.K_LEFT:
-                if percent2>0:
+                if percent2>1:
                     percent2=percent2-1
             if event.key == pygame.K_d:
                 if percent1<100:
                     percent1=percent1+1
             if event.key == pygame.K_a:
-                if percent1>0:
+                if percent1>1:
                     percent1=percent1-1
             if event.key == pygame.K_UP:
                 if angle2<90:
                     angle2=angle2+1
             if event.key == pygame.K_DOWN:
-                if angle2>0:
+                if angle2>1:
                     angle2=angle2-1
             if event.key == pygame.K_w:
                 if angle1<90:
                     angle1=angle1+1
             if event.key == pygame.K_s:
-                if angle1>0:
+                if angle1>1:
                     angle1=angle1-1
             if event.key==pygame.K_SPACE:
                 if turn%2==0:

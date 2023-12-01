@@ -21,7 +21,7 @@ class Shot(pygame.sprite.Sprite):
     def update(self):
         end=time.perf_counter()
         self.x_speed = self.percent * 0.1*math.cos(self.angle)
-        self.y_speed = abs(self.percent * 0.6*math.sin(self.angle))*-1 + ((self.percent/(self.percent+1))*(3*(end-self.start)))
+        self.y_speed = abs(self.percent * 0.6*math.sin(self.angle))*-1 + ((abs(self.percent)/(abs(self.percent)+1))*(3*(end-self.start)))
         self.x += self.x_speed
         self.y += self.y_speed
         self.rect.x=self.x
