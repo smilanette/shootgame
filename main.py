@@ -36,6 +36,8 @@ clock = pygame.time.Clock()
 oofsound=pygame.mixer.Sound('sprites_final/hurt.wav')
 bubbles=pygame.mixer.Sound('sprites_final/bubbles.wav')
 cannonhit=pygame.mixer.Sound('sprites_final/chomp.wav')
+#Zack helped gave me the idea to give a sound to shooting the cannon and made me the audio
+cannonaudio=pygame.mixer.Sound('sprites_final/cannonaudio.wav')
 #set turn
 turn=1
 #percent
@@ -93,6 +95,7 @@ while running:
                 if angle1>1:
                     angle1=angle1-1
             if event.key==pygame.K_SPACE:
+                pygame.mixer.Sound.play(cannonaudio)
                 if turn%2==0:
                     ball.image=blueball
                     ball.x=675
@@ -213,7 +216,7 @@ while running:
             blockades.remove(block)
         for i in range(3):
             blockades.add(Blockades(random.randint(100, 600), random.randint(50, 225)))
-    if ball.x<0 or ball.x>800:
+    if ball.x<0 or ball.x>800 or ball.y>600:
         ball.percent = 0
         ball.x = 330
         ball.y = 30
