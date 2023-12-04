@@ -16,4 +16,4 @@ How To Win:
 
 Citations:
   - Zach helped me with adding a new voice over for the cannon fire and implementing that into my code.
-  - For my sprites and sounds I used royalty free downloadable cites
+  - For my sprites and sounds I used royalty free downloadable sites
