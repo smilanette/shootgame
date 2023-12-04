@@ -11,5 +11,9 @@ Power Ups: If you hit the star with your ball you will gain an extra life
   - The power up changes position everytime you hit it
 
 How To Win:
-  - If the opposing player loses all three lives then you win
+  - If the opposing player loses all their lives then you win
   - Click 1 to play again
+
+Citations:
+  - Zach helped me with adding a new voice over for the cannon fire and implementing that into my code.
+  - For my sprites and sounds I used royalty free downloadable cites
