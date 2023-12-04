@@ -17,3 +17,6 @@ How To Win:
 Citations:
   - Zach helped me with adding a new voice over for the cannon fire and implementing that into my code.
   - For my sprites and sounds I used royalty free downloadable sites
+  - I found my end game and start screen images on google images
+  - I used stack overflow for help, especially for help on adding music to my game
+      - I also used the pygame website for help
